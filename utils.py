@@ -90,7 +90,7 @@ class DH:
              -np.cos(theta + delta_theta[1]) * np.sin(alpha), a * np.sin(theta + delta_theta[1]), 0,
              np.sin(alpha), np.cos(alpha), d, 0, 0, 0, 1)).reshape(4, 4)
 
-        transfomation = _transfomation_matrix[0] @ _transfomation_matrix[1] @ _transfomation_matrix[2]
+        transfomation = _transfomation_matrix[0] @ _transfomation_matrix[1] @ self.transformation(2, 5)
         return transfomation
 
 
@@ -151,7 +151,7 @@ class TripodHeads:
 
         _x = x.reshape(2)
 
-        newvec = self.dh.get_newvec(_x) @ self.dh.hand2cam
+        newvec = self.dh.get_newvec(_x)
         new_loc = newvec[0:3, 3]
 
         loc_array = qr_loc - new_loc

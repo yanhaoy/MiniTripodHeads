@@ -7,7 +7,9 @@ from utils import TripodHeads, arc, read_from_yaml, get_objpoints
 
 dhpara = np.array([[arc(90), 13, 10, arc(90)],
                    [arc(90), 8.6, 0, arc(90)],
-                   [0, 52, 0, 0]])
+                   [0, 52, 0, 0],
+                   [0, 0, -21, 0],
+                   [0, 50, 0, 0]])
 
 servopara = [2, [7, 8], 50, [90, 90]]
 
