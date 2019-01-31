@@ -24,7 +24,6 @@ mtx, dist = read_from_yaml('camera_paraments.yaml', ['mtx', 'dist'])
 objp, axisp = get_objpoints(2, 45.4)
 
 cap = cv.VideoCapture(2)
-fourcc = cv.VideoWriter_fourcc(*'XVID')
 
 while True:
     # 读摄像头
@@ -61,8 +60,10 @@ while True:
         break
     elif key & 0xFF == ord('a'):
         out = tripodheads.get_aimming_arc(hvec)
+        deltatheta = [fmod(out[0], 2 * np.pi) / np.pi * 180, fmod(out[1], 2 * np.pi) / np.pi * 180]
+        tripodheads.servo_run([0, 1], deltatheta)
         print('hvec:', hvec)
-        print('result', fmod(out[0], 2 * np.pi) / np.pi * 180, fmod(out[1], 2 * np.pi) / np.pi * 180)
+        print('result', deltatheta)
 
 # 清理设备
 cap.release()

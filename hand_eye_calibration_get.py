@@ -10,7 +10,6 @@ mtx, dist = read_from_yaml('camera_paraments.yaml', ['mtx', 'dist'])
 objp, axisp = get_objpoints(2, 45.4)
 
 cap = cv.VideoCapture(2)
-fourcc = cv.VideoWriter_fourcc(*'XVID')
 
 hvec = []
 
