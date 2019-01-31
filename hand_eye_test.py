@@ -9,7 +9,8 @@ dhpara = np.array([[arc(90), 13, 10, arc(90)],
                    [arc(90), 8.6, 0, arc(90)],
                    [0, 52, 0, 0],
                    [0, 0, -21, 0],
-                   [0, 50, 0, 0]])
+                   [0, 50, 0, arc(1)],
+                   [arc(90), 0, 0, arc(2)]])
 
 servopara = [2, [7, 8], 50, [90, 90]]
 
@@ -25,7 +26,7 @@ aruco_dict = cv.aruco.getPredefinedDictionary(1)
 mtx, dist = read_from_yaml('camera_paraments.yaml', ['mtx', 'dist'])
 objp, axisp = get_objpoints(2, 45.4)
 
-cap = cv.VideoCapture(2)
+cap = cv.VideoCapture(0)
 
 while True:
     # 读摄像头
