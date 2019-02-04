@@ -190,10 +190,9 @@ def tf_get_cam_matrix(hvec, handvec):
         loss += tf.reduce_mean(tf.slice(tf.square(qvec[i] - qvec[i + 1]), [0, 0], [3, 3]))
 
     cut_weight = tf.slice(weight_add, [0, 0], [3, 3])
-    loss += tf.reduce_mean(tf.square(tf.reduce_sum(tf.square(cut_weight), 1) - 1))
-    loss += tf.reduce_mean(tf.square(tf.reduce_sum(tf.square(tf.transpose(cut_weight)), 1) - 1))
+    loss += tf.reduce_mean(tf.square(tf.matrix_transpose(cut_weight) - tf.matrix_inverse(cut_weight)))
 
-    opmizer = tf.train.AdadeltaOptimizer()
+    opmizer = tf.train.AdamOptimizer()
     train = opmizer.minimize(loss)
 
     init = tf.global_variables_initializer()

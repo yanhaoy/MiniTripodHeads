@@ -13,29 +13,37 @@ servopara = [2, [8, 7], 50, [0, 0]]
 tripodheads = TripodHeads(dhpara, servopara)
 
 handvec = []
-tripodheads.servo_run([0, 1], [arc(75), arc(85)])
+tripodheads.servo_run([0, 1], [-15, -5])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [15, 5])
 
-tripodheads.servo_run([0, 1], [arc(90), arc(100)])
+tripodheads.servo_run([0, 1], [0, 10])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [0, -10])
 
-tripodheads.servo_run([0, 1], [arc(100), arc(85)])
+tripodheads.servo_run([0, 1], [10, -5])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [-10, 5])
 
-tripodheads.servo_run([0, 1], [arc(75), arc(90)])
+tripodheads.servo_run([0, 1], [-15, 0])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [15, 0])
 
-tripodheads.servo_run([0, 1], [arc(100), arc(100)])
+tripodheads.servo_run([0, 1], [10, 10])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [-10, -10])
 
-tripodheads.servo_run([0, 1], [arc(90), arc(85)])
+tripodheads.servo_run([0, 1], [0, -5])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [0, 5])
 
-tripodheads.servo_run([0, 1], [arc(75), arc(100)])
+tripodheads.servo_run([0, 1], [-15, 10])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [15, -10])
 
-tripodheads.servo_run([0, 1], [arc(100), arc(90)])
+tripodheads.servo_run([0, 1], [10, 0])
 handvec.append(tripodheads.dh.transformation(0, 3).astype(np.float32))
+tripodheads.servo_run([0, 1], [-10, 0])
 
 x_predict = tf_get_cam_matrix(hvec, handvec)
 print(x_predict)
