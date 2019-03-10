@@ -175,8 +175,8 @@ class TripodHeads:
 
 
 def tf_get_cam_matrix(hvec, handvec):
-    rotation_weight = tf.Variable([[0, -1, 0], [1, 0, 0], [0, 0, 1]], dtype=tf.float32)
-    transition_weight = tf.Variable([[37.5], [0], [15]], dtype=tf.float32)
+    rotation_weight = tf.Variable([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=tf.float32)
+    transition_weight = tf.Variable([[0], [0], [0]], dtype=tf.float32)
     weight = tf.concat([rotation_weight, transition_weight], 1)
     last = tf.constant([[0, 0, 0, 1]], dtype=tf.float32)
     weight_add = tf.concat([weight, last], 0)
@@ -192,7 +192,7 @@ def tf_get_cam_matrix(hvec, handvec):
     cut_weight = tf.slice(weight_add, [0, 0], [3, 3])
     loss += tf.reduce_mean(tf.square(tf.matrix_transpose(cut_weight) - tf.matrix_inverse(cut_weight)))
 
-    opmizer = tf.train.AdamOptimizer()
+    opmizer = tf.train.MomentumOptimizer(learning_rate=0.001, momentum=0.9)
     train = opmizer.minimize(loss)
 
     init = tf.global_variables_initializer()
@@ -201,7 +201,7 @@ def tf_get_cam_matrix(hvec, handvec):
 
     train = opmizer.minimize(loss, var_list=rotation_weight)
 
-    for i in range(100000):
+    for i in range(25000):
         sess.run(train)
         if i % 1000 == 0:
             print(i, sess.run(weight_add), 'loss:', sess.run(loss))
@@ -212,7 +212,7 @@ def tf_get_cam_matrix(hvec, handvec):
 
     train = opmizer.minimize(loss, var_list=transition_weight)
 
-    for i in range(100000):
+    for i in range(25000):
         sess.run(train)
         if i % 1000 == 0:
             print(i, sess.run(weight_add), 'loss:', sess.run(loss))
